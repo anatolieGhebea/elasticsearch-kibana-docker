@@ -1,0 +1,5 @@
+.env
+data/logs/*
+data/extra_config/*
+data/elasticsearch/*
+data/kibana/*
