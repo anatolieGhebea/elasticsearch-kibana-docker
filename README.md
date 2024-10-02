@@ -50,3 +50,9 @@ Normally you would use a reverse proxy like Nginx or Apache to prevent direct ac
 # With nginx reverse proxy
 
 The following is an example of how to use Nginx as a reverse proxy to secure Elasticsearch and Kibana.
+
+
+# Troubleshooting
+
+If the container keeps restarting, check the `/data` folder ownership. 
+Try running `sudo chown -R 1000:1000 data` to change the ownership, this will allow the containers to write to the data folder.
