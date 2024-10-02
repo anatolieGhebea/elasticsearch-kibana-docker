@@ -21,6 +21,8 @@ The easiest way to run Elasticsearch and Kibana is to use Docker. This repositor
 6. Open your browser and navigate to `http://localhost:9200` to access Elasticsearch.
 7. Open your browser and navigate to `http://localhost:5601` to access Kibana.
 
+> Note: Replace `localhost` with the IP address or the hostname of the machine running the containners.
+
 ### Ho to set kibana user password
 
 To set the kibana user password, you need to send a POST request to the Elasticsearch API. You can use curl to send the request. The following command will set the password for the kibana user to `KIBANA_PASSWORD`.
@@ -46,13 +48,13 @@ The Elasticsearch and Kibana containers are not secure by default. You should no
 Make sure to set the firewall rules to only allow access to the Elasticsearch and Kibana ports from trusted IP addresses.
 Normally you would use a reverse proxy like Nginx or Apache to prevent direct access to elastic and kibana. 
 
+## Troubleshooting
+
+If the container keeps restarting, check the `/data` folder ownership. 
+Try running `sudo chown -R 1000:1000 data` to change the ownership, this will allow the containers to write to the data folder.
+
 
 # With nginx reverse proxy
 
 The following is an example of how to use Nginx as a reverse proxy to secure Elasticsearch and Kibana.
 
-
-# Troubleshooting
-
-If the container keeps restarting, check the `/data` folder ownership. 
-Try running `sudo chown -R 1000:1000 data` to change the ownership, this will allow the containers to write to the data folder.
