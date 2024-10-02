@@ -56,5 +56,16 @@ Try running `sudo chown -R 1000:1000 data` to change the ownership, this will al
 
 # With nginx reverse proxy
 
-The following is an example of how to use Nginx as a reverse proxy to secure Elasticsearch and Kibana.
+You can run `docker-compose -f docker-compose-nginx.yml up -d` to start the containers with an Nginx reverse proxy. Before running the command, make sure to set the appropriate values in the `.env` file and change the `./nginx/conf.d/myelastic.conf` file to match your domain name, it is also recomended to have the name of the configuration file to match the domain name.
+If you have a SSL certificate, uncomeent the second part of the configuarion file and set the appropriate values for the SSL certificate and key.
+Also be sure to check and set the appropriate values for:
+```bash
+add_header 'Access-Control-Allow-Origin' '*';
+add_header 'Access-Control-Allow-Headers' 'Allow, Content-Type, authorization';
+add_header 'Access-Control-Allow-Methods' 'GET, POST, PUT, OPTIONS, HEAD';
+add_header 'Allow' "GET, POST, PUT, OPTIONS, HEAD";
+```
 
+> Note: When using this setup, the elasticsearch and kibana containers do not expose the ports to the host machine, thus they are reachable onnly via the Nginx reverse proxy. This means that to set the kibana user password, you need to run the curl on the configured domain name.
+
+For indepth guide on how to setup and configure the Nginx reverse proxy, refer to the [Nginx documentation](https://nginx.org/en/docs/)
