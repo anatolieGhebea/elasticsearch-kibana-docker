@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  filebeat:
+    image: docker.elastic.co/beats/filebeat:8.11.1
+    container_name: filebeat
+    user: root
+    volumes:
+      - ./filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+      - ${FILEBEAT_LOG_DIR:-/logs}:/logs:ro
+
+    # the network definition is only neccessary if filebeat container is running on the same machine as the elasticsearch container
+    networks:
+      - proxynetwork
+
+# the network definition is only neccessary if filebeat container is running on the same machine as the elasticsearch container
+networks:
+  proxynetwork:
+    external: true

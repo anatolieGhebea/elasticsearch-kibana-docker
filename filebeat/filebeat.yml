@@ -1,0 +1,29 @@
+# This is a sample filebeat configuration for nginx logs
+# NOTE: when using docker compose, the paths must be the same as the ${FILEBEAT_LOG_DIR} env variable.
+filebeat.inputs:
+- type: log
+  enabled: true
+  paths:
+    - /logs/access.log
+    - /logs/error.log
+  fields:
+    service: nginx
+  fields_under_root: true
+  ignore_older: 24h
+
+# Optional: Add Nginx module for structured data
+filebeat.modules:
+- module: nginx
+  access:
+    enabled: true
+    var.paths: ["/logs/access.log"]
+  error:
+    enabled: true
+    var.paths: ["/logs/error.log"]
+
+# The user used here must have the necessary permissions in elasticsearch to be able to create and insert documents in the index
+# You can start by using the elastic root user to verify that everything works as expected and then create a new user with only the necessary permissions
+output.elasticsearch:
+  hosts: ["http://elasticsearch:9200"]
+  username: "user"
+  password: "pwd"
